@@ -4,11 +4,34 @@ import { StyleSheet, Text, TextInput, View, TouchableOpacity } from 'react-nativ
 export default function App() {
 const[peso, setPeso] = useState('');
 const[altura, setAltura] = useState('');
+const[resultado, setResultado] = useState('');
  
   function calcularImc(){
+    let mensagem =""
     let alturaEmmetro = parseFloat(altura) / 100;
-    let resultado = parseFloat(peso)/(alturaEmmetro * alturaEmmetro);
-    alert("Valor do IMC: "+resultado.toFixed(2));
+    let result = parseFloat(peso)/(alturaEmmetro * alturaEmmetro);
+   
+
+    if ( result <18.5){
+      mensagem= "Abaixo do peso"
+    }
+    else if(result <=24.99 ){
+      mensagem=  "Peso ideal"
+    }
+    else if(result <=29.99 ){
+      mensagem= "Levemente acima do peso"
+    }  
+    else if(result <=34.99 ){
+      mensagem= "Obesidade grau I"
+    }  
+    else if(result <=39.99 ){
+      mensagem= "Obesidade grau II (severa)"
+    }  
+    else if(result >=40){
+      mensagem=  "Obesidade grau III (mórbida)"
+    }  
+
+    setResultado("Valor do IMC: "+result.toFixed(2)+ "\n" +mensagem );
   }
  
   return (
@@ -17,6 +40,8 @@ const[altura, setAltura] = useState('');
      
       <View style={styles.bloco}>
           <Text style={styles.label}>Peso</Text>
+
+
           <TextInput
             style={styles.input}
             keyboardType='numeric'
@@ -39,6 +64,9 @@ const[altura, setAltura] = useState('');
               <Text style={styles.btnTxt}>Calcular</Text>
           </TouchableOpacity>
       </View>
+
+       <Text style={styles.result}>{resultado}</Text>
+
     </View>
   );
 }
@@ -77,6 +105,10 @@ const styles = StyleSheet.create({
   btnTxt:{
     fontSize:30,
     color:"#FFF",
+    textAlign:'center'
+  },
+  result:{
+    fontSize:25,
     textAlign:'center'
   }
 });
